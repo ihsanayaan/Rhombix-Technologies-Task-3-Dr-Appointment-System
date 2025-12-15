@@ -7,7 +7,7 @@ The complete flow was first designed as wireframes in Figma and then converted i
 
 Project Objective
 
-Design a complete booking system user flow
+Design a complete booking system user flow 
 
 Apply UI/UX principles in a real interface
 
