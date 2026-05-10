@@ -47,8 +47,8 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }) {
             <Link to="/services" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
               {t('services')}
             </Link>
-            <Link to="/success" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
-              {t('bookings')}
+            <Link to="/my-bookings" className="...">
+             {t('myBookings')}
             </Link>
             <Link to="/doctors" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
               {t('doctors')}

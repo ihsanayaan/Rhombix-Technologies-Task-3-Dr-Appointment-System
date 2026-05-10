@@ -1,12 +1,60 @@
-import { useBooking } from "../store/bookingStore";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Clock, DollarSign, Info, Calendar } from "lucide-react";
+import useBookingStore from '../store/bookingStore'; // ✅ Default import
 
 export default function ServiceDetails() {
-  const { service } = useBooking();
+  const { id } = useParams(); // ✅ URL se id le
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { setSelectedService } = useBookingStore(); // ✅ Store se setter le
+
+  // ✅ Services list yahan honi chahiye
+  const services = [
+    { 
+      id: 1, 
+      name: "General Checkup", 
+      nameAr: "فحص عام", 
+      category: "General",
+      categoryAr: "عام",
+      price: 150, 
+      duration: "30",
+      description: "Complete health checkup with consultation",
+      descriptionAr: "فحص صحي شامل مع استشارة"
+    },
+    { 
+      id: 2, 
+      name: "Dental Cleaning", 
+      nameAr: "تنظيف الأسنان", 
+      category: "Dental",
+      categoryAr: "أسنان",
+      price: 200, 
+      duration: "45",
+      description: "Professional teeth cleaning and polishing",
+      descriptionAr: "تنظيف وتلميع الأسنان احترافي"
+    },
+    { 
+      id: 3, 
+      name: "Skin Consultation", 
+      nameAr: "استشارة جلدية", 
+      category: "Dermatology",
+      categoryAr: "جلدية",
+      price: 300, 
+      duration: "60",
+      description: "Skin analysis and treatment plan",
+      descriptionAr: "تحليل البشرة وخطة العلاج"
+    },
+  ];
+
+  // ✅ URL se service find kar
+  const service = services.find(s => s.id === parseInt(id));
+
+  // ✅ Book Now handler
+  const handleBookNow = () => {
+    if (!service) return;
+    setSelectedService(service); // Store mein save kar
+    navigate("/booking"); // Booking pe le ja
+  };
 
   if (!service) {
     return (
@@ -42,8 +90,12 @@ export default function ServiceDetails() {
           
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
-            <h1 className="text-2xl md:text-3xl font-bold mb-2">{service.name}</h1>
-            <p className="text-blue-100">{service.category}</p>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+              {i18n.language === 'ar' ? service.nameAr : service.name}
+            </h1>
+            <p className="text-blue-100">
+              {i18n.language === 'ar' ? service.categoryAr : service.category}
+            </p>
           </div>
 
           {/* Details */}
@@ -79,7 +131,7 @@ export default function ServiceDetails() {
                 <h3 className="font-semibold">{t('aboutService')}</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                {t('serviceDescription')}
+                {i18n.language === 'ar' ? service.descriptionAr : service.description}
               </p>
             </div>
 
@@ -104,13 +156,13 @@ export default function ServiceDetails() {
               </ul>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - ✅ Fixed */}
             <button
-              onClick={() => navigate("/select-datetime")}
+              onClick={handleBookNow}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
             >
               <Calendar size={20} />
-              {t('selectDateTime')}
+              {t('bookNow')}
             </button>
 
           </div>

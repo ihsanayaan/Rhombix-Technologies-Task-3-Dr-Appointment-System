@@ -1,18 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import MyBookings from "./pages/MyBookings";
 import Navbar from "./components/Navbar"; 
 import Doctors from './pages/Doctors';
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import ServiceDetails from "./pages/ServiceDetails";
-import SelectDateTime from "./pages/SelectDateTime";
-import UserDetails from "./pages/UserDetails";
-import Summary from "./pages/Summary";
-import Success from "./pages/Success";
+import Booking from "./pages/Booking";
 import Profile from "./pages/Profile";
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Ye add kar
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <BrowserRouter>
@@ -25,10 +23,8 @@ function App() {
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/services" element={<Services />} />
         <Route path="/service/:id" element={<ServiceDetails />} />
-        <Route path="/select-datetime" element={<SelectDateTime />} />
-        <Route path="/details" element={<UserDetails />} />
-        <Route path="/summary" element={<Summary />} />
-        <Route path="/success" element={<Success />} />
+        <Route path="/booking" element={<Booking />} /> 
+        <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>

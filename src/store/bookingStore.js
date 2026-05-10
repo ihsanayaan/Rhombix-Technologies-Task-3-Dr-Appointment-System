@@ -1,46 +1,58 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export const useBooking = create(
+const useBookingStore = create(
   persist(
-    (set) => ({
-      // State
-      service: null,
-      date: null,
-      time: null,
-      user: {},
-      language: 'ar', // Saudi default Arabic
-      
-      // Actions
-      setService: (service) => set({ service }),
-      setDate: (date) => set({ date }),
-      setTime: (time) => set({ time }),
-      setUser: (user) => set({ user }),
-      setLanguage: (language) => set({ language }),
-      
-      // Reset all
-      reset: () => set({ 
-        service: null, 
-        date: null, 
-        time: null, 
-        user: {},
-        // language reset nahi karna - user preference hai
+    (set, get) => ({
+      selectedService: null,
+      selectedDate: null,
+      selectedTime: null,
+      userDetails: {
+        name: '',
+        phone: '',
+        email: '',
+        gender: '',
+      },
+      bookingReference: null,
+      allBookings: [], // ✅ Naya - Sari bookings save hongi
+
+      setSelectedService: (service) => set({ selectedService: service }),
+      setSelectedDate: (date) => set({ selectedDate: date }),
+      setSelectedTime: (time) => set({ selectedTime: time }),
+      setUserDetails: (details) => set({
+        userDetails: { ...get().userDetails, ...details }
+      }),
+      setBookingReference: (ref) => set({ bookingReference: ref }),
+
+      // ✅ Naya function - Booking save karne ke liye
+      addBooking: (booking) => set({
+        allBookings: [...get().allBookings, {
+          ...booking,
+          id: Date.now(),
+          createdAt: new Date().toISOString(),
+          status: 'confirmed'
+        }]
       }),
 
-      // Reset only booking data
-      resetBooking: () => set({ 
-        service: null, 
-        date: null, 
-        time: null 
+      // ✅ Booking cancel karne ke liye
+      cancelBooking: (bookingId) => set({
+        allBookings: get().allBookings.map(b => 
+          b.id === bookingId ? { ...b, status: 'cancelled' } : b
+        )
+      }),
+
+      resetBooking: () => set({
+        selectedService: null,
+        selectedDate: null,
+        selectedTime: null,
+        userDetails: { name: '', phone: '', email: '', gender: '' },
+        bookingReference: null,
       }),
     }),
     {
-      name: 'sehabook-storage', // localStorage key
-      partialize: (state) => ({
-        // Sirf ye fields save karna localStorage mein
-        language: state.language,
-        user: state.user,
-      }),
+      name: 'booking-storage',
     }
   )
 );
+
+export default useBookingStore;
