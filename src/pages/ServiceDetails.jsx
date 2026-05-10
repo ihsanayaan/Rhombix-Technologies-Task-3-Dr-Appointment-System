@@ -1,15 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Clock, DollarSign, Info, Calendar } from "lucide-react";
-import useBookingStore from '../store/bookingStore'; // ✅ Default import
+import useBookingStore from '../store/bookingStore';
 
 export default function ServiceDetails() {
-  const { id } = useParams(); // ✅ URL se id le
+  const { id } = useParams();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { setSelectedService } = useBookingStore(); // ✅ Store se setter le
+  const { setSelectedService } = useBookingStore();
+  const isRTL = i18n.language === 'ar';
 
-  // ✅ Services list yahan honi chahiye
+  // ✅ Complete Services List
   const services = [
     { 
       id: 1, 
@@ -19,8 +20,8 @@ export default function ServiceDetails() {
       categoryAr: "عام",
       price: 150, 
       duration: "30",
-      description: "Complete health checkup with consultation",
-      descriptionAr: "فحص صحي شامل مع استشارة"
+      description: "Complete health checkup with consultation and basic tests",
+      descriptionAr: "فحص صحي شامل مع استشارة واختبارات أساسية"
     },
     { 
       id: 2, 
@@ -30,8 +31,8 @@ export default function ServiceDetails() {
       categoryAr: "أسنان",
       price: 200, 
       duration: "45",
-      description: "Professional teeth cleaning and polishing",
-      descriptionAr: "تنظيف وتلميع الأسنان احترافي"
+      description: "Professional teeth cleaning, polishing and fluoride treatment",
+      descriptionAr: "تنظيف وتلميع الأسنان احترافي مع علاج بالفلورايد"
     },
     { 
       id: 3, 
@@ -41,19 +42,116 @@ export default function ServiceDetails() {
       categoryAr: "جلدية",
       price: 300, 
       duration: "60",
-      description: "Skin analysis and treatment plan",
-      descriptionAr: "تحليل البشرة وخطة العلاج"
+      description: "Skin analysis, diagnosis and personalized treatment plan",
+      descriptionAr: "تحليل البشرة والتشخيص وخطة علاج شخصية"
+    },
+    { 
+      id: 4, 
+      name: "Eye Examination", 
+      nameAr: "فحص العيون", 
+      category: "Ophthalmology",
+      categoryAr: "عيون",
+      price: 180, 
+      duration: "40",
+      description: "Complete eye checkup including vision test and pressure check",
+      descriptionAr: "فحص كامل للعين يشمل اختبار النظر وضغط العين"
+    },
+    { 
+      id: 5, 
+      name: "Blood Test", 
+      nameAr: "تحليل الدم", 
+      category: "Laboratory",
+      categoryAr: "مختبر",
+      price: 120, 
+      duration: "15",
+      description: "Complete blood count and basic metabolic panel",
+      descriptionAr: "تعداد الدم الكامل واللوحة الأيضية الأساسية"
+    },
+    { 
+      id: 6, 
+      name: "X-Ray", 
+      nameAr: "أشعة سينية", 
+      category: "Radiology",
+      categoryAr: "أشعة",
+      price: 250, 
+      duration: "20",
+      description: "Digital X-Ray imaging with instant report",
+      descriptionAr: "تصوير رقمي بالأشعة السينية مع تقرير فوري"
+    },
+    { 
+      id: 7, 
+      name: "Physiotherapy Session", 
+      nameAr: "جلسة علاج طبيعي", 
+      category: "Physiotherapy",
+      categoryAr: "علاج طبيعي",
+      price: 220, 
+      duration: "50",
+      description: "Personalized physiotherapy and rehabilitation session",
+      descriptionAr: "جلسة علاج طبيعي وإعادة تأهيل شخصية"
+    },
+    { 
+      id: 8, 
+      name: "Vaccination", 
+      nameAr: "تطعيم", 
+      category: "Immunization",
+      categoryAr: "تطعيم",
+      price: 100, 
+      duration: "10",
+      description: "Standard vaccination with medical consultation",
+      descriptionAr: "تطعيم قياسي مع استشارة طبية"
+    },
+    { 
+      id: 9, 
+      name: "Cardiology Consultation", 
+      nameAr: "استشارة قلب", 
+      category: "Cardiology",
+      categoryAr: "قلب",
+      price: 350, 
+      duration: "45",
+      description: "Heart health assessment with ECG if needed",
+      descriptionAr: "تقييم صحة القلب مع تخطيط القلب إذا لزم الأمر"
+    },
+    { 
+      id: 10, 
+      name: "Pediatric Checkup", 
+      nameAr: "فحص أطفال", 
+      category: "Pediatrics",
+      categoryAr: "أطفال",
+      price: 180, 
+      duration: "30",
+      description: "Complete child health checkup and vaccination review",
+      descriptionAr: "فحص صحي كامل للأطفال ومراجعة التطعيمات"
+    },
+    { 
+      id: 11, 
+      name: "Ultrasound", 
+      nameAr: "أشعة صوتية", 
+      category: "Radiology",
+      categoryAr: "أشعة",
+      price: 280, 
+      duration: "30",
+      description: "Abdominal or pregnancy ultrasound with report",
+      descriptionAr: "أشعة صوتية للبطن أو الحمل مع تقرير"
+    },
+    { 
+      id: 12, 
+      name: "Dental Filling", 
+      nameAr: "حشو أسنان", 
+      category: "Dental",
+      categoryAr: "أسنان",
+      price: 400, 
+      duration: "60",
+      description: "Composite or amalgam dental filling treatment",
+      descriptionAr: "علاج حشو الأسنان المركب أو الملغم"
     },
   ];
 
-  // ✅ URL se service find kar
   const service = services.find(s => s.id === parseInt(id));
 
-  // ✅ Book Now handler
   const handleBookNow = () => {
     if (!service) return;
-    setSelectedService(service); // Store mein save kar
-    navigate("/booking"); // Booking pe le ja
+    setSelectedService(service);
+    navigate("/booking");
   };
 
   if (!service) {
@@ -73,7 +171,7 @@ export default function ServiceDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto px-4 py-6 max-w-3xl">
         
         {/* Back Button */}
@@ -81,7 +179,7 @@ export default function ServiceDetails() {
           onClick={() => navigate("/services")}
           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-6 hover:text-blue-600 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft size={18} className={i18n.language === 'ar' ? 'rotate-180' : ''} />
+          <ArrowLeft size={18} className={isRTL ? 'rotate-180' : ''} />
           {t('backToServices')}
         </button>
 
@@ -91,10 +189,10 @@ export default function ServiceDetails() {
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
             <h1 className="text-2xl md:text-3xl font-bold mb-2">
-              {i18n.language === 'ar' ? service.nameAr : service.name}
+              {isRTL ? service.nameAr : service.name}
             </h1>
             <p className="text-blue-100">
-              {i18n.language === 'ar' ? service.categoryAr : service.category}
+              {isRTL ? service.categoryAr : service.category}
             </p>
           </div>
 
@@ -131,7 +229,7 @@ export default function ServiceDetails() {
                 <h3 className="font-semibold">{t('aboutService')}</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                {i18n.language === 'ar' ? service.descriptionAr : service.description}
+                {isRTL ? service.descriptionAr : service.description}
               </p>
             </div>
 
@@ -156,7 +254,7 @@ export default function ServiceDetails() {
               </ul>
             </div>
 
-            {/* CTA Button - ✅ Fixed */}
+            {/* CTA Button */}
             <button
               onClick={handleBookNow}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"

@@ -12,7 +12,6 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }) {
     i18n.changeLanguage(newLang);
   };
 
-  // RTL set kar HTML tag pe
   useEffect(() => {
     document.documentElement.dir = lang === 'ar'? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
@@ -47,8 +46,8 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }) {
             <Link to="/services" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
               {t('services')}
             </Link>
-            <Link to="/my-bookings" className="...">
-             {t('myBookings')}
+            <Link to="/my-bookings" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
+             {t('myBookings')} {/* ✅ Fix: 'My Bookings' → 'myBookings' */}
             </Link>
             <Link to="/doctors" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium">
               {t('doctors')}
@@ -75,16 +74,16 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }) {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-50 dark:bg-zinc-800 py-4 px-6 space-y-2 border-t">
-          <Link to="/" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 rounded-lg">
+          <Link to="/" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 dark:hover:bg-zinc-700 rounded-lg text-gray-700 dark:text-gray-200">
             {t('home')}
           </Link>
-          <Link to="/services" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 rounded-lg">
+          <Link to="/services" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 dark:hover:bg-zinc-700 rounded-lg text-gray-700 dark:text-gray-200">
             {t('services')}
           </Link>
-          <Link to="/success" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 rounded-lg">
-            {t('bookings')}
+          <Link to="/my-bookings" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 dark:hover:bg-zinc-700 rounded-lg text-gray-700 dark:text-gray-200">
+            {t('myBookings')} {/* ✅ Fix: 'My Bookings' → 'myBookings' */}
           </Link>
-          <Link to="/doctors" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 rounded-lg">
+          <Link to="/doctors" onClick={() => setIsMenuOpen(false)} className="block py-3 px-4 hover:bg-blue-50 dark:hover:bg-zinc-700 rounded-lg text-gray-700 dark:text-gray-200">
             {t('doctors')}
           </Link>
         </div>

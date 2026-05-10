@@ -9,12 +9,18 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
-    { id: 1, name: "General Checkup", nameAr: "فحص عام", icon: "🩺" },
-    { id: 2, name: "Dental Care", nameAr: "العناية بالأسنان", icon: "🦷" },
-    { id: 3, name: "Eye Exam", nameAr: "فحص العيون", icon: "👁️" },
-    { id: 4, name: "Skin Care", nameAr: "العناية بالبشرة", icon: "✨" },
-    { id: 5, name: "Cardiology", nameAr: "أمراض القلب", icon: "❤️" },
-    { id: 6, name: "Orthopedics", nameAr: "جراحة العظام", icon: "🦴" },
+     { id: 'all', name: "All Services", nameAr: "جميع الخدمات", icon: "🏥" },
+    { id: '1', name: "General Checkup", nameAr: "فحص عام", icon: "🩺" },
+    { id: '2', name: "Dental Care", nameAr: "العناية بالأسنان", icon: "🦷" },
+    { id: '3', name: "Eye Exam", nameAr: "فحص العيون", icon: "👁️" },
+    { id: '4', name: "Skin Care", nameAr: "العناية بالبشرة", icon: "✨" },
+    { id: '5', name: "Cardiology", nameAr: "أمراض القلب", icon: "❤️" },
+    { id: '6', name: "Orthopedics", nameAr: "جراحة العظام", icon: "🦴" },
+    { id: '7', name: "Laboratory", nameAr: "مختبر", icon: "🧪" },
+    { id: '8', name: "Radiology", nameAr: "أشعة", icon: "📷" },
+    { id: '9', name: "Physiotherapy", nameAr: "علاج طبيعي", icon: "💪" },
+    { id: '10', name: "Immunization", nameAr: "تطعيم", icon: "💉" },
+    { id: '11', name: "Pediatrics", nameAr: "أطفال", icon: "👶" },
   ];
 
   // ✅ Search Filter Logic

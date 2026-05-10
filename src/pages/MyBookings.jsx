@@ -7,6 +7,7 @@ export default function MyBookings() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { allBookings, cancelBooking } = useBookingStore();
+  const isRTL = i18n.language === 'ar'; // ✅ RTL check
 
   const handleCancel = (bookingId) => {
     if (confirm(t('cancelConfirm'))) {
@@ -15,7 +16,7 @@ export default function MyBookings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 p-4 md:p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 p-4 md:p-6" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto max-w-4xl">
         
         {/* Back Button */}
@@ -23,12 +24,12 @@ export default function MyBookings() {
           onClick={() => navigate('/')}
           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-6 hover:text-blue-600 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft size={18} className={i18n.language === 'ar'? 'rotate-180' : ''} />
-          {t('back')}
+          <ArrowLeft size={18} className={isRTL ? 'rotate-180' : ''} />
+          {t('back')} {/* ✅ small 'b' */}
         </button>
 
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-          {t('myBookings')}
+          {t('myBookings')} {/* ✅ camelCase */}
         </h1>
 
         {allBookings.length === 0 ? (
@@ -53,9 +54,9 @@ export default function MyBookings() {
                 }`}
               >
                 <div className="flex justify-between items-start mb-4">
-                  <div>
+                  <div className={isRTL ? 'text-right' : 'text-left'}>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                      {i18n.language === 'ar' ? booking.service.nameAr : booking.service.name}
+                      {isRTL ? booking.service.nameAr : booking.service.name}
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       {t('bookingReference')}: {booking.reference}
@@ -69,12 +70,12 @@ export default function MyBookings() {
                     {booking.status === 'confirmed' ? (
                       <>
                         <CheckCircle size={16} />
-                        {t('confirmed')}
+                        {t('confirmed')} {/* ✅ small 'c' */}
                       </>
                     ) : (
                       <>
                         <XCircle size={16} />
-                        {t('cancelled')}
+                        {t('cancelled')} {/* ✅ small 'c' */}
                       </>
                     )}
                   </div>
@@ -104,7 +105,7 @@ export default function MyBookings() {
                     className="w-full bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2"
                   >
                     <X size={18} />
-                    {t('cancelBooking')}
+                    {t('cancelBooking')} {/* ✅ camelCase */}
                   </button>
                 )}
               </div>
